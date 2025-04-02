@@ -19,9 +19,10 @@ interface UseToneAudioProps {
   isPlaying: boolean;
   volume: number;
   onBeat: () => void;
+  onProgressUpdate?: (progress: number) => void;
 }
 
-export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) => {
+export const useToneAudio = ({ isPlaying, volume, onBeat, onProgressUpdate }: UseToneAudioProps) => {
   const kickSynth = useRef<Tone.MembraneSynth | null>(null);
   const bassSynth = useRef<Tone.Synth | null>(null);
   const hihatSynth = useRef<Tone.MetalSynth | null>(null);
@@ -29,6 +30,29 @@ export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) =
   
   const sequencesRef = useRef<any>(null);
   const [initialized, setInitialized] = useState(false);
+  const [currentProgress, setCurrentProgress] = useState(0);
+
+  // Progress tracking
+  useEffect(() => {
+    if (!isPlaying) return;
+    
+    // Pattern duration is 16 beats (4 bars in 4/4)
+    const patternDuration = (60 / 124) * 16; // 124 is the BPM
+    const intervalTime = 50; // Update every 50ms for smooth progress
+    
+    const progressInterval = setInterval(() => {
+      // Get current position in the pattern
+      const position = Tone.Transport.seconds % patternDuration;
+      const progress = position / patternDuration;
+      
+      setCurrentProgress(progress);
+      if (onProgressUpdate) {
+        onProgressUpdate(progress);
+      }
+    }, intervalTime);
+    
+    return () => clearInterval(progressInterval);
+  }, [isPlaying, onProgressUpdate]);
 
   // Initialize all instruments
   const initSynths = async () => {
@@ -106,4 +130,6 @@ export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) =
     // Master volume adjustment
     Tone.Destination.volume.value = Tone.gainToDb(volume);
   }, [volume, initialized]);
+
+  return { currentProgress };
 };
