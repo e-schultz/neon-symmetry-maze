@@ -8,18 +8,12 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { useAudio } from '@/contexts/AudioContext';
-
-// Defined pattern data to make it more maintainable
-const patternOptions = [
-  { id: 'pattern1', name: 'Classic Minimal' },
-  { id: 'pattern2', name: 'Syncopated' },
-  { id: 'pattern3', name: 'Deep Hypnotic' },
-  { id: 'pattern4', name: 'Plastikman Inspired' },
-];
+import { patternOptions } from '@/utils/patternService';
 
 /**
  * PatternSelector - A component for selecting audio patterns
  * Uses the AudioContext for state management to avoid prop drilling
+ * Uses centralized pattern data from patternService for consistency
  */
 const PatternSelector = () => {
   const { selectedPattern, setSelectedPattern } = useAudio();

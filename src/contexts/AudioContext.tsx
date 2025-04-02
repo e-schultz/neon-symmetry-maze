@@ -8,8 +8,7 @@ import {
   mapPatternToVisualParameters 
 } from '@/utils/audioAnalysis';
 import * as Tone from 'tone';
-
-type PatternType = 'pattern1' | 'pattern2' | 'pattern3' | 'pattern4';
+import { PatternType, patternOptions } from '@/utils/patternService';
 
 interface AudioContextType {
   // Playback state
@@ -93,26 +92,10 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     return () => clearInterval(intervalId);
   }, [isPlaying, selectedPattern, beatActive]);
 
-  // Track info - this will now change based on the pattern
-  const getBPM = () => {
-    switch(selectedPattern) {
-      case 'pattern4': return 110;
-      case 'pattern3': return 118;
-      default: return 124;
-    }
-  };
-  
-  const getGenre = () => {
-    switch(selectedPattern) {
-      case 'pattern4': return "Plastikman Inspired";
-      case 'pattern3': return "Deep Hypnotic";
-      case 'pattern2': return "Syncopated Minimal";
-      default: return "Minimal Techno";
-    }
-  };
-
-  const bpm = getBPM();
-  const genre = getGenre();
+  // Find the currently selected pattern from our options
+  const currentPatternOption = patternOptions.find(p => p.id === selectedPattern) || patternOptions[0];
+  const bpm = currentPatternOption.bpm;
+  const genre = currentPatternOption.genre;
 
   const togglePlayback = () => {
     if (!isPlaying) {
@@ -139,26 +122,14 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setSelectedPattern(pattern);
     
     if (isPlaying) {
-      let patternName = "";
-      switch(pattern) {
-        case 'pattern4':
-          patternName = "Plastikman Inspired";
-          break;
-        case 'pattern3':
-          patternName = "Deep Hypnotic";
-          break;
-        case 'pattern2':
-          patternName = "Syncopated";
-          break;
-        default:
-          patternName = "Classic Minimal";
+      const newPattern = patternOptions.find(p => p.id === pattern);
+      if (newPattern) {
+        toast({
+          title: "Pattern Changed",
+          description: `Switched to ${newPattern.name} pattern`,
+          duration: 3000,
+        });
       }
-      
-      toast({
-        title: "Pattern Changed",
-        description: `Switched to ${patternName} pattern`,
-        duration: 3000,
-      });
     }
   };
 

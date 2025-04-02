@@ -6,23 +6,17 @@ import {
   createKickSynth, 
   createBassSynth, 
   createHihatSynth, 
-  createPadSynth
+  createPadSynth,
+  createAcidSynth
 } from '../utils/synthSetup';
-import { 
-  createSequencePatterns as createSequencePatterns1, 
-  startSequences, 
-  stopSequences, 
-  disposeSequences 
-} from '../utils/sequencePatterns';
 import {
-  createSequencePatterns as createSequencePatterns2
-} from '../utils/sequencePatterns2';
-import {
-  createSequencePatterns as createSequencePatterns3
-} from '../utils/sequencePatterns3';
-import {
-  createSequencePatterns as createSequencePatterns4
-} from '../utils/sequencePatterns4';
+  SequencePatterns,
+  PatternType,
+  getPatternCreator,
+  startSequences,
+  stopSequences,
+  disposeSequences
+} from '../utils/patternService';
 
 interface UseToneAudioProps {
   isPlaying: boolean;
@@ -31,24 +25,30 @@ interface UseToneAudioProps {
   selectedPattern: string;
 }
 
+/**
+ * Custom hook for managing Tone.js audio engine
+ * Encapsulates audio synth creation, pattern setup, and playback control
+ */
 export const useToneAudio = ({ isPlaying, volume, onBeat, selectedPattern }: UseToneAudioProps) => {
   const kickSynth = useRef<Tone.MembraneSynth | null>(null);
   const bassSynth = useRef<Tone.Synth | null>(null);
   const hihatSynth = useRef<Tone.MetalSynth | null>(null);
   const padSynth = useRef<Tone.PolySynth | null>(null);
+  const acidSynth = useRef<Tone.MonoSynth | null>(null);
   
-  const sequencesRef = useRef<any>(null);
+  const sequencesRef = useRef<SequencePatterns | null>(null);
   const [initialized, setInitialized] = useState(false);
   const prevPatternRef = useRef(selectedPattern);
 
   // Initialize all instruments
   const initSynths = async () => {
-    const { reverb, pingPongDelay } = createAudioEffects();
+    const { reverb, pingPongDelay, filter } = createAudioEffects();
     
     kickSynth.current = createKickSynth(reverb);
     bassSynth.current = createBassSynth(pingPongDelay);
     hihatSynth.current = createHihatSynth(reverb);
     padSynth.current = createPadSynth(reverb);
+    acidSynth.current = createAcidSynth(filter);
 
     setInitialized(true);
   };
@@ -62,30 +62,29 @@ export const useToneAudio = ({ isPlaying, volume, onBeat, selectedPattern }: Use
       disposeSequences(sequencesRef.current);
     }
     
-    // Choose the correct pattern based on selection
-    let createSequences;
-    switch(selectedPattern) {
-      case 'pattern4':
-        createSequences = createSequencePatterns4;
-        break;
-      case 'pattern3':
-        createSequences = createSequencePatterns3;
-        break;
-      case 'pattern2':
-        createSequences = createSequencePatterns2;
-        break;
-      case 'pattern1':
-      default:
-        createSequences = createSequencePatterns1;
-    }
+    // Get the appropriate pattern creator function
+    const createPattern = getPatternCreator(selectedPattern as PatternType);
     
-    sequencesRef.current = createSequences(
-      kickSynth.current,
-      bassSynth.current,
-      hihatSynth.current,
-      padSynth.current,
-      onBeat
-    );
+    // Create sequences based on pattern type
+    // For Plastikman pattern, pass the acid synth if available
+    if (selectedPattern === 'pattern4' && acidSynth.current) {
+      sequencesRef.current = createPattern(
+        kickSynth.current,
+        bassSynth.current,
+        hihatSynth.current,
+        padSynth.current,
+        onBeat,
+        acidSynth.current
+      );
+    } else {
+      sequencesRef.current = createPattern(
+        kickSynth.current,
+        bassSynth.current,
+        hihatSynth.current,
+        padSynth.current,
+        onBeat
+      );
+    }
   };
 
   // Handle play/pause
