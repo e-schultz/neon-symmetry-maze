@@ -1,8 +1,9 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AudioPlayer from '@/components/AudioPlayer';
 import GeometricVisualization from '@/components/GeometricVisualization';
 import { useToast } from '@/components/ui/use-toast';
+import { InfoIcon } from 'lucide-react';
 
 const Index = () => {
   const { toast } = useToast();
@@ -15,6 +16,15 @@ const Index = () => {
       setBeatActive(false);
     }, 100);
   };
+  
+  useEffect(() => {
+    // Inform user about audio on page load
+    toast({
+      title: "Audio Information",
+      description: "This experience works best with sound. Click play to start the visualization with beat simulation.",
+      duration: 5000,
+    });
+  }, [toast]);
   
   const handleStartExperience = () => {
     toast({
@@ -46,6 +56,13 @@ const Index = () => {
           <p>
             This visualization features rotating geometric patterns with 4-way symmetry, synchronized to a minimal techno soundtrack.
           </p>
+          
+          <div className="flex items-center justify-center mt-4 p-2 rounded-md bg-gray-900/50 border border-neon-cyan/20 text-xs">
+            <InfoIcon size={16} className="mr-2 text-neon-cyan" />
+            <p>
+              No audio file detected. Using simulated 124 BPM beats for visualization.
+            </p>
+          </div>
         </div>
       </main>
       
