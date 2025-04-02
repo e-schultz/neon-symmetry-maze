@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import { Slider } from "@/components/ui/slider";
 import { useToast } from '@/components/ui/use-toast';
 import TonePlayer from './TonePlayer';
+import PlayPauseButton from './audio/PlayPauseButton';
+import VolumeControl from './audio/VolumeControl';
+import TrackInfo from './audio/TrackInfo';
 
 interface AudioPlayerProps {
   onBeat: () => void;
@@ -47,37 +47,19 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
       />
       
       <div className="container flex items-center justify-between gap-4">
-        <Button 
-          variant="outline" 
-          size="icon" 
-          onClick={togglePlayPause}
-          className="border-neon-cyan hover:bg-neon-cyan/20 text-neon-cyan"
-        >
-          {isPlaying ? <Pause /> : <Play />}
-        </Button>
+        <PlayPauseButton
+          isPlaying={isPlaying}
+          onTogglePlayPause={togglePlayPause}
+        />
         
-        <div className="flex items-center gap-4 flex-1 max-w-xs">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={toggleMute}
-            className="text-neon-magenta hover:bg-neon-magenta/20"
-          >
-            {isMuted ? <VolumeX /> : <Volume2 />}
-          </Button>
-          <Slider 
-            value={[volume]} 
-            min={0} 
-            max={1} 
-            step={0.01} 
-            onValueChange={handleVolumeChange} 
-            className="flex-1"
-          />
-        </div>
+        <VolumeControl
+          volume={volume}
+          isMuted={isMuted}
+          onVolumeChange={handleVolumeChange}
+          onToggleMute={toggleMute}
+        />
         
-        <div className="text-xs text-neon-cyan opacity-70 flex items-center gap-2">
-          <p>124 BPM Minimal Techno</p>
-        </div>
+        <TrackInfo bpm={124} genre="Minimal Techno" />
       </div>
     </div>
   );
