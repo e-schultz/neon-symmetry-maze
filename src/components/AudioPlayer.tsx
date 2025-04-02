@@ -4,6 +4,7 @@ import TonePlayer from './TonePlayer';
 import PlayPauseButton from './audio/PlayPauseButton';
 import VolumeControl from './audio/VolumeControl';
 import TrackInfo from './audio/TrackInfo';
+import PatternSelector from './audio/PatternSelector';
 import { useAudio } from '@/contexts/AudioContext';
 
 interface AudioPlayerProps {
@@ -19,7 +20,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
     isMuted, 
     toggleMute,
     bpm,
-    genre
+    genre,
+    selectedPattern
   } = useAudio();
 
   // Calculate effective volume (considering mute state)
@@ -31,20 +33,25 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
         isPlaying={isPlaying} 
         volume={effectiveVolume}
         onBeat={onBeat}
+        selectedPattern={selectedPattern}
       />
       
-      <div className="container flex items-center justify-between gap-4">
-        <PlayPauseButton
-          isPlaying={isPlaying}
-          onTogglePlayPause={togglePlayback}
-        />
+      <div className="container flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-4">
+          <PlayPauseButton
+            isPlaying={isPlaying}
+            onTogglePlayPause={togglePlayback}
+          />
+          
+          <VolumeControl
+            volume={volume}
+            isMuted={isMuted}
+            onVolumeChange={setVolume}
+            onToggleMute={toggleMute}
+          />
+        </div>
         
-        <VolumeControl
-          volume={volume}
-          isMuted={isMuted}
-          onVolumeChange={setVolume}
-          onToggleMute={toggleMute}
-        />
+        <PatternSelector />
         
         <TrackInfo bpm={bpm} genre={genre} />
       </div>

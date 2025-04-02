@@ -2,6 +2,8 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 
+type PatternType = 'pattern1' | 'pattern2';
+
 interface AudioContextType {
   // Playback state
   isPlaying: boolean;
@@ -12,6 +14,10 @@ interface AudioContextType {
   setVolume: (volume: number[]) => void;
   isMuted: boolean;
   toggleMute: () => void;
+  
+  // Pattern selection
+  selectedPattern: PatternType;
+  setSelectedPattern: (pattern: PatternType) => void;
   
   // Track info
   bpm: number;
@@ -24,6 +30,7 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [isMuted, setIsMuted] = useState(false);
+  const [selectedPattern, setSelectedPattern] = useState<PatternType>('pattern1');
   const { toast } = useToast();
   
   // Track info
@@ -49,6 +56,19 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const toggleMute = () => {
     setIsMuted(!isMuted);
   };
+  
+  // Handle pattern selection
+  const handlePatternChange = (pattern: PatternType) => {
+    setSelectedPattern(pattern);
+    
+    if (isPlaying) {
+      toast({
+        title: "Pattern Changed",
+        description: pattern === 'pattern1' ? 'Switched to Classic Minimal pattern' : 'Switched to Syncopated pattern',
+        duration: 3000,
+      });
+    }
+  };
 
   const value = {
     isPlaying,
@@ -57,6 +77,8 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setVolume: handleVolumeChange,
     isMuted,
     toggleMute,
+    selectedPattern,
+    setSelectedPattern: handlePatternChange,
     bpm,
     genre
   };

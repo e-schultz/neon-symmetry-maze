@@ -9,19 +9,23 @@ import {
   createPadSynth 
 } from '../utils/synthSetup';
 import { 
-  createSequencePatterns, 
+  createSequencePatterns as createSequencePatterns1, 
   startSequences, 
   stopSequences, 
   disposeSequences 
 } from '../utils/sequencePatterns';
+import {
+  createSequencePatterns as createSequencePatterns2
+} from '../utils/sequencePatterns2';
 
 interface UseToneAudioProps {
   isPlaying: boolean;
   volume: number;
   onBeat: () => void;
+  selectedPattern: string;
 }
 
-export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) => {
+export const useToneAudio = ({ isPlaying, volume, onBeat, selectedPattern }: UseToneAudioProps) => {
   const kickSynth = useRef<Tone.MembraneSynth | null>(null);
   const bassSynth = useRef<Tone.Synth | null>(null);
   const hihatSynth = useRef<Tone.MetalSynth | null>(null);
@@ -29,6 +33,7 @@ export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) =
   
   const sequencesRef = useRef<any>(null);
   const [initialized, setInitialized] = useState(false);
+  const prevPatternRef = useRef(selectedPattern);
 
   // Initialize all instruments
   const initSynths = async () => {
@@ -42,7 +47,7 @@ export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) =
     setInitialized(true);
   };
 
-  // Set up our sequencers
+  // Set up our sequencers based on selected pattern
   const setupSequencers = () => {
     if (!kickSynth.current || !bassSynth.current || !hihatSynth.current || !padSynth.current) return;
     
@@ -51,7 +56,12 @@ export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) =
       disposeSequences(sequencesRef.current);
     }
     
-    sequencesRef.current = createSequencePatterns(
+    // Choose the correct pattern based on selection
+    const createSequences = selectedPattern === 'pattern1' 
+      ? createSequencePatterns1 
+      : createSequencePatterns2;
+    
+    sequencesRef.current = createSequences(
       kickSynth.current,
       bassSynth.current,
       hihatSynth.current,
@@ -98,6 +108,27 @@ export const useToneAudio = ({ isPlaying, volume, onBeat }: UseToneAudioProps) =
       }
     };
   }, [isPlaying, initialized, onBeat]);
+
+  // Handle pattern changes
+  useEffect(() => {
+    // Only recreate sequences if pattern changed and we're currently playing
+    if (initialized && isPlaying && prevPatternRef.current !== selectedPattern) {
+      // Stop current sequences
+      if (sequencesRef.current) {
+        stopSequences(sequencesRef.current);
+      }
+      
+      // Setup new sequences with the new pattern
+      setupSequencers();
+      
+      // Start the new sequences
+      if (sequencesRef.current) {
+        startSequences(sequencesRef.current);
+      }
+      
+      prevPatternRef.current = selectedPattern;
+    }
+  }, [selectedPattern, initialized, isPlaying]);
 
   // Handle volume changes
   useEffect(() => {
