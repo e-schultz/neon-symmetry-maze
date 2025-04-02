@@ -1,5 +1,5 @@
 
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { useAudio } from "@/contexts/AudioContext";
 
 /**
@@ -35,6 +35,18 @@ export const useAnimationStyles = (config: AnimationConfig = {}): CSSProperties 
     beatActive = false,
     visualTempo = 1
   } = audioParameters;
+  
+  // Add state to force re-renders for smoother animations
+  const [time, setTime] = useState(Date.now());
+  
+  // Update time state for animations that need continuous updates
+  useEffect(() => {
+    const animationFrame = requestAnimationFrame(() => {
+      setTime(Date.now());
+    });
+    
+    return () => cancelAnimationFrame(animationFrame);
+  });
   
   const {
     baseScale = 1,
