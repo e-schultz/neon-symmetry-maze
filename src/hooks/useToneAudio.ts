@@ -17,6 +17,9 @@ import {
 import {
   createSequencePatterns as createSequencePatterns2
 } from '../utils/sequencePatterns2';
+import {
+  createSequencePatterns as createSequencePatterns3
+} from '../utils/sequencePatterns3';
 
 interface UseToneAudioProps {
   isPlaying: boolean;
@@ -57,9 +60,20 @@ export const useToneAudio = ({ isPlaying, volume, onBeat, selectedPattern }: Use
     }
     
     // Choose the correct pattern based on selection
-    const createSequences = selectedPattern === 'pattern1' 
-      ? createSequencePatterns1 
-      : createSequencePatterns2;
+    let createSequences;
+    switch(selectedPattern) {
+      case 'pattern1':
+        createSequences = createSequencePatterns1;
+        break;
+      case 'pattern2':
+        createSequences = createSequencePatterns2;
+        break;
+      case 'pattern3':
+        createSequences = createSequencePatterns3;
+        break;
+      default:
+        createSequences = createSequencePatterns1;
+    }
     
     sequencesRef.current = createSequences(
       kickSynth.current,

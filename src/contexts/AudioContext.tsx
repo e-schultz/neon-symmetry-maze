@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 
-type PatternType = 'pattern1' | 'pattern2';
+type PatternType = 'pattern1' | 'pattern2' | 'pattern3';
 
 interface AudioContextType {
   // Playback state
@@ -33,9 +33,24 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [selectedPattern, setSelectedPattern] = useState<PatternType>('pattern1');
   const { toast } = useToast();
   
-  // Track info
-  const bpm = 124;
-  const genre = "Minimal Techno";
+  // Track info - this will now change based on the pattern
+  const getBPM = () => {
+    switch(selectedPattern) {
+      case 'pattern3': return 118;
+      default: return 124;
+    }
+  };
+  
+  const getGenre = () => {
+    switch(selectedPattern) {
+      case 'pattern3': return "Deep Hypnotic";
+      case 'pattern2': return "Syncopated Minimal";
+      default: return "Minimal Techno";
+    }
+  };
+
+  const bpm = getBPM();
+  const genre = getGenre();
 
   const togglePlayback = () => {
     if (!isPlaying) {
@@ -62,9 +77,21 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setSelectedPattern(pattern);
     
     if (isPlaying) {
+      let patternName = "";
+      switch(pattern) {
+        case 'pattern3':
+          patternName = "Deep Hypnotic";
+          break;
+        case 'pattern2':
+          patternName = "Syncopated";
+          break;
+        default:
+          patternName = "Classic Minimal";
+      }
+      
       toast({
         title: "Pattern Changed",
-        description: pattern === 'pattern1' ? 'Switched to Classic Minimal pattern' : 'Switched to Syncopated pattern',
+        description: `Switched to ${patternName} pattern`,
         duration: 3000,
       });
     }

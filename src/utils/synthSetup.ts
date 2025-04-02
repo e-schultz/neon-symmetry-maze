@@ -38,19 +38,39 @@ export const createKickSynth = (reverb: Tone.Reverb) => {
   return kick;
 };
 
-// Set up the bass synth
+// Set up the bass synth - enhanced for deep hypnotic feel
 export const createBassSynth = (pingPongDelay: Tone.PingPongDelay) => {
+  // Create a filter for the bass
+  const filter = new Tone.Filter({
+    type: "lowpass",
+    frequency: 1000,
+    rolloff: -24,
+    Q: 1
+  });
+  
+  // Add some subtle distortion
+  const distortion = new Tone.Distortion({
+    distortion: 0.05,
+    wet: 0.1
+  });
+  
+  // Create the bass synth with richer tone
   const bass = new Tone.Synth({
     oscillator: {
-      type: "triangle"
+      type: "fatsawtooth",
+      count: 3,
+      spread: 20
     },
     envelope: {
-      attack: 0.02,
-      decay: 0.1,
-      sustain: 0.3,
-      release: 0.8
+      attack: 0.08,
+      decay: 0.3,
+      sustain: 0.4,
+      release: 1.2
     }
-  }).connect(pingPongDelay);
+  }).chain(filter, distortion, pingPongDelay);
+  
+  // Adjust volume
+  bass.volume.value = -8;
   
   return bass;
 };

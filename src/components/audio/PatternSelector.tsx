@@ -25,6 +25,7 @@ const PatternSelector = () => {
         <SelectContent>
           <SelectItem value="pattern1">Classic Minimal</SelectItem>
           <SelectItem value="pattern2">Syncopated</SelectItem>
+          <SelectItem value="pattern3">Deep Hypnotic</SelectItem>
         </SelectContent>
       </Select>
     </div>
