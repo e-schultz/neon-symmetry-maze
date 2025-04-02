@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 interface TimeProgressProps {
   progress: number;
@@ -24,7 +25,10 @@ const TimeProgress: React.FC<TimeProgressProps> = ({
       <Progress 
         value={progressPercentage} 
         className="h-2 flex-1" 
-        indicatorClassName="bg-gradient-to-r from-neon-purple to-neon-cyan" 
+        indicator={cn(
+          "bg-gradient-to-r from-neon-purple to-neon-cyan", 
+          "h-full w-full flex-1 transition-all"
+        )}
       />
       <span className="text-xs text-neon-purple min-w-12 text-right">{totalTime}</span>
     </div>
