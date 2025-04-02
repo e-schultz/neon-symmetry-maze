@@ -25,8 +25,10 @@ const VerticalBars: React.FC<VerticalBarsProps> = ({ count, size }) => {
       
       // Calculate dynamic height based on audio energy with enhanced wave effect
       // Using multiple sine waves with different frequencies for a more complex pattern
-      const wavePosition = i * 0.2; // Position along the wave
+      // Make wave position a combination of index and time to create horizontal movement
       const timeOffset = Date.now() * 0.001 * visualTempo; // Time-based animation
+      const scrollOffset = timeOffset * 2; // Controls horizontal scroll speed
+      const wavePosition = i * 0.2 + scrollOffset; // Add scrollOffset for horizontal movement
       
       // Combine multiple sine waves with different frequencies and phases
       const wave1 = Math.sin(wavePosition + timeOffset * 0.5) * 0.3;
