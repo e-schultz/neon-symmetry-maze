@@ -1,4 +1,3 @@
-
 import { CSSProperties } from "react";
 
 export interface VisualizationElementProps {
@@ -23,7 +22,6 @@ export interface HorizontalLinesProps extends VisualizationElementProps {
 }
 
 export interface CentralElementProps extends VisualizationElementProps {
-  pulse: boolean;
   isMobile: boolean;
 }
 

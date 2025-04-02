@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import PerimeterDots from './visualizations/PerimeterDots';
 import VerticalBars from './visualizations/VerticalBars';
@@ -8,25 +7,8 @@ import HorizontalLines from './visualizations/HorizontalLines';
 import CentralElement from './visualizations/CentralElement';
 import CornerPatterns from './visualizations/CornerPatterns';
 
-interface GeometricVisualizationProps {
-  beatActive: boolean;
-}
-
-const GeometricVisualization: React.FC<GeometricVisualizationProps> = ({ beatActive }) => {
+const GeometricVisualization: React.FC = () => {
   const isMobile = useIsMobile();
-  const [pulse, setPulse] = useState(false);
-  
-  // Set up temporary beat effect
-  useEffect(() => {
-    if (beatActive) {
-      setPulse(true);
-      const timer = setTimeout(() => {
-        setPulse(false);
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [beatActive]);
-
   const size = isMobile ? 300 : 600;
   const halfSize = size / 2;
   const centerPoint = { x: halfSize, y: halfSize };
@@ -46,7 +28,6 @@ const GeometricVisualization: React.FC<GeometricVisualizationProps> = ({ beatAct
         
         {/* Central diamond with rotation */}
         <CentralElement 
-          pulse={pulse} 
           size={size} 
           centerPoint={centerPoint}
           isMobile={isMobile} 
