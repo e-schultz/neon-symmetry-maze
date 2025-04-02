@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,13 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Neon color palette
+				neon: {
+					white: '#ffffff',
+					cyan: '#00ffff',
+					purple: '#bf00ff',
+					magenta: '#ff00ff'
 				}
 			},
 			borderRadius: {
@@ -84,11 +92,32 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				rotation: {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
+				},
+				'counter-rotation': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(-360deg)' }
+				},
+				pulse: {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' }
+				},
+				'horizontal-move': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(100%)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'rotate-slow': 'rotation 10s linear infinite',
+				'rotate-medium': 'rotation 7s linear infinite',
+				'rotate-counter': 'counter-rotation 8s linear infinite',
+				'pulse-slow': 'pulse 2s ease-in-out infinite',
+				'h-move': 'horizontal-move 15s linear infinite'
 			}
 		}
 	},

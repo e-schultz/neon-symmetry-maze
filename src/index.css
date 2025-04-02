@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -96,6 +97,26 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-black text-foreground;
   }
+}
+
+.dashed-circle {
+  stroke-dasharray: 10 10;
+}
+
+.maze-pattern {
+  stroke-dasharray: 5 5;
+}
+
+.horizontal-line {
+  stroke-dasharray: 20 10;
+}
+
+.vertical-bar {
+  animation-delay: calc(var(--index) * 0.2s);
+}
+
+.perimeter-dot {
+  animation-delay: calc(var(--index) * 0.125s);
 }
