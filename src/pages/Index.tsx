@@ -21,7 +21,7 @@ const Index = () => {
     // Inform user about audio on page load
     toast({
       title: "Audio Information",
-      description: "This experience works best with sound. Click play to start the visualization with beat simulation.",
+      description: "This experience works best with sound. Click play to start the visualization with live audio synthesis.",
       duration: 5000,
     });
   }, [toast]);
@@ -29,7 +29,7 @@ const Index = () => {
   const handleStartExperience = () => {
     toast({
       title: "Experience Started",
-      description: "Click play to sync the visuals with audio",
+      description: "Click play to sync the visuals with the generated audio",
       duration: 5000,
     });
   };
@@ -60,7 +60,7 @@ const Index = () => {
           <div className="flex items-center justify-center mt-4 p-2 rounded-md bg-gray-900/50 border border-neon-cyan/20 text-xs">
             <InfoIcon size={16} className="mr-2 text-neon-cyan" />
             <p>
-              No audio file detected. Using simulated 124 BPM beats for visualization.
+              Using Tone.js to generate live minimal techno at 124 BPM.
             </p>
           </div>
         </div>
