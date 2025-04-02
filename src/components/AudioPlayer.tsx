@@ -11,6 +11,10 @@ interface AudioPlayerProps {
   onBeat: () => void;
 }
 
+/**
+ * AudioPlayer - Container component managing audio playback controls
+ * Uses composition pattern to delegate specific UI controls to child components
+ */
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
   const { 
     isPlaying, 
@@ -29,6 +33,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-black/80 to-transparent">
+      {/* Separate non-UI audio engine component */}
       <TonePlayer 
         isPlaying={isPlaying} 
         volume={effectiveVolume}
@@ -38,6 +43,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
       
       <div className="container flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-4">
+          {/* Presentational components with focused responsibilities */}
           <PlayPauseButton
             isPlaying={isPlaying}
             onTogglePlayPause={togglePlayback}

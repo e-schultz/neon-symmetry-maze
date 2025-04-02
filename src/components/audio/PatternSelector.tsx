@@ -9,6 +9,18 @@ import {
 } from "@/components/ui/select";
 import { useAudio } from '@/contexts/AudioContext';
 
+// Defined pattern data to make it more maintainable
+const patternOptions = [
+  { id: 'pattern1', name: 'Classic Minimal' },
+  { id: 'pattern2', name: 'Syncopated' },
+  { id: 'pattern3', name: 'Deep Hypnotic' },
+  { id: 'pattern4', name: 'Plastikman Inspired' },
+];
+
+/**
+ * PatternSelector - A component for selecting audio patterns
+ * Uses the AudioContext for state management to avoid prop drilling
+ */
 const PatternSelector = () => {
   const { selectedPattern, setSelectedPattern } = useAudio();
   
@@ -26,10 +38,15 @@ const PatternSelector = () => {
           <SelectValue placeholder="Pattern" />
         </SelectTrigger>
         <SelectContent className="bg-black/90 border-gray-800">
-          <SelectItem value="pattern1" className="text-white/90 hover:bg-white/10">Classic Minimal</SelectItem>
-          <SelectItem value="pattern2" className="text-white/90 hover:bg-white/10">Syncopated</SelectItem>
-          <SelectItem value="pattern3" className="text-white/90 hover:bg-white/10">Deep Hypnotic</SelectItem>
-          <SelectItem value="pattern4" className="text-white/90 hover:bg-white/10">Plastikman Inspired</SelectItem>
+          {patternOptions.map(pattern => (
+            <SelectItem 
+              key={pattern.id} 
+              value={pattern.id} 
+              className="text-white/90 hover:bg-white/10"
+            >
+              {pattern.name}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

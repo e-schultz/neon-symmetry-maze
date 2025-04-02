@@ -10,7 +10,17 @@ interface TonePlayerProps {
   selectedPattern: string;
 }
 
-const TonePlayer: React.FC<TonePlayerProps> = ({ isPlaying, volume, onBeat, selectedPattern }) => {
+/**
+ * TonePlayer - Responsible for managing audio engine interactions
+ * Uses custom hook to encapsulate audio logic and reduce component complexity
+ * Follows container component pattern - no UI, just business logic
+ */
+const TonePlayer: React.FC<TonePlayerProps> = ({ 
+  isPlaying, 
+  volume, 
+  onBeat, 
+  selectedPattern 
+}) => {
   const { setBeatActive } = useAudio();
   
   // Enhanced beat handler that updates both the visualization and context
@@ -31,7 +41,7 @@ const TonePlayer: React.FC<TonePlayerProps> = ({ isPlaying, volume, onBeat, sele
     selectedPattern 
   });
 
-  // This component doesn't render anything
+  // This component doesn't render anything - it's a pure logic component
   return null;
 };
 
