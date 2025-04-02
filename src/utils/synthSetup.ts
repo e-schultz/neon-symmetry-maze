@@ -16,7 +16,15 @@ export const createAudioEffects = () => {
     wet: 0.1
   }).toDestination();
   
-  return { reverb, pingPongDelay };
+  // Add a filter effect for acid sounds
+  const filter = new Tone.Filter({
+    type: "lowpass",
+    frequency: 1000,
+    rolloff: -24,
+    Q: 8 // High resonance for acid sound
+  }).toDestination();
+  
+  return { reverb, pingPongDelay, filter };
 };
 
 // Set up the kick drum synth
@@ -110,4 +118,37 @@ export const createPadSynth = (reverb: Tone.Reverb) => {
   pad.volume.value = -15;
   
   return pad;
+};
+
+// NEW - Create acid synth (303-style)
+export const createAcidSynth = (filter: Tone.Filter) => {
+  // Create the classic acid sound
+  const acid = new Tone.MonoSynth({
+    oscillator: {
+      type: "sawtooth"
+    },
+    filter: {
+      Q: 6,
+      type: "lowpass",
+      rolloff: -24
+    },
+    envelope: {
+      attack: 0.001,
+      decay: 0.3,
+      sustain: 0.3,
+      release: 0.3
+    },
+    filterEnvelope: {
+      attack: 0.001,
+      decay: 0.5,
+      sustain: 0.1,
+      release: 0.5,
+      baseFrequency: 200,
+      octaves: 2.5
+    }
+  }).connect(filter);
+  
+  acid.volume.value = -12;
+  
+  return acid;
 };

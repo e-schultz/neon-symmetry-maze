@@ -6,7 +6,7 @@ import {
   createKickSynth, 
   createBassSynth, 
   createHihatSynth, 
-  createPadSynth 
+  createPadSynth
 } from '../utils/synthSetup';
 import { 
   createSequencePatterns as createSequencePatterns1, 
@@ -20,6 +20,9 @@ import {
 import {
   createSequencePatterns as createSequencePatterns3
 } from '../utils/sequencePatterns3';
+import {
+  createSequencePatterns as createSequencePatterns4
+} from '../utils/sequencePatterns4';
 
 interface UseToneAudioProps {
   isPlaying: boolean;
@@ -62,15 +65,16 @@ export const useToneAudio = ({ isPlaying, volume, onBeat, selectedPattern }: Use
     // Choose the correct pattern based on selection
     let createSequences;
     switch(selectedPattern) {
-      case 'pattern1':
-        createSequences = createSequencePatterns1;
-        break;
-      case 'pattern2':
-        createSequences = createSequencePatterns2;
+      case 'pattern4':
+        createSequences = createSequencePatterns4;
         break;
       case 'pattern3':
         createSequences = createSequencePatterns3;
         break;
+      case 'pattern2':
+        createSequences = createSequencePatterns2;
+        break;
+      case 'pattern1':
       default:
         createSequences = createSequencePatterns1;
     }

@@ -9,7 +9,7 @@ import {
 } from '@/utils/audioAnalysis';
 import * as Tone from 'tone';
 
-type PatternType = 'pattern1' | 'pattern2' | 'pattern3';
+type PatternType = 'pattern1' | 'pattern2' | 'pattern3' | 'pattern4';
 
 interface AudioContextType {
   // Playback state
@@ -96,6 +96,7 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   // Track info - this will now change based on the pattern
   const getBPM = () => {
     switch(selectedPattern) {
+      case 'pattern4': return 110;
       case 'pattern3': return 118;
       default: return 124;
     }
@@ -103,6 +104,7 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   
   const getGenre = () => {
     switch(selectedPattern) {
+      case 'pattern4': return "Plastikman Inspired";
       case 'pattern3': return "Deep Hypnotic";
       case 'pattern2': return "Syncopated Minimal";
       default: return "Minimal Techno";
@@ -139,6 +141,9 @@ export const AudioProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     if (isPlaying) {
       let patternName = "";
       switch(pattern) {
+        case 'pattern4':
+          patternName = "Plastikman Inspired";
+          break;
         case 'pattern3':
           patternName = "Deep Hypnotic";
           break;

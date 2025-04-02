@@ -26,6 +26,7 @@ const PatternSelector = () => {
           <SelectItem value="pattern1" className="text-white/90 hover:bg-white/10">Classic Minimal</SelectItem>
           <SelectItem value="pattern2" className="text-white/90 hover:bg-white/10">Syncopated</SelectItem>
           <SelectItem value="pattern3" className="text-white/90 hover:bg-white/10">Deep Hypnotic</SelectItem>
+          <SelectItem value="pattern4" className="text-white/90 hover:bg-white/10">Plastikman Inspired</SelectItem>
         </SelectContent>
       </Select>
     </div>

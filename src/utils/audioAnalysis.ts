@@ -17,6 +17,10 @@ export interface AudioParameters {
   visualTempo: number;
   colorIntensity: number;
   rotationSpeed: number;
+  
+  // New parameters for Plastikman-style visualizations
+  acidResonance: number;   // For filter sweep visualizations
+  spatialDepth: number;    // For depth perception in visuals
 }
 
 // Default parameters when audio is not playing
@@ -27,7 +31,9 @@ export const defaultAudioParameters: AudioParameters = {
   highFrequencyEnergy: 0,
   visualTempo: 1,
   colorIntensity: 0.5,
-  rotationSpeed: 0.5
+  rotationSpeed: 0.5,
+  acidResonance: 0,
+  spatialDepth: 0.5
 };
 
 // Create an analyzer to extract frequency data from Tone.js
@@ -69,12 +75,21 @@ export const mapPatternToVisualParameters = (
   
   // Define pattern-specific parameters
   switch (pattern) {
-    case 'pattern1': // Classic Minimal
+    case 'pattern4': // Plastikman Inspired
       return {
-        visualTempo: 1,
-        colorIntensity: 0.5 + (bassEnergy * 0.5),
-        rotationSpeed: 0.5,
-        patternIntensity: 0.7
+        visualTempo: 0.6, // very slow for hypnotic feel
+        colorIntensity: 0.9 + (bassEnergy * 0.1), // higher contrast
+        rotationSpeed: 0.2, // very slow rotation 
+        patternIntensity: 0.95, // very intense pattern
+        acidResonance: 0.7 + (highFrequencyEnergy * 0.3), // acid filter sweep parameter
+        spatialDepth: 0.8 // enhanced depth perception
+      };
+    case 'pattern3': // Deep Hypnotic
+      return {
+        visualTempo: 0.7, // slower for the hypnotic feel
+        colorIntensity: 0.8 + (bassEnergy * 0.2),
+        rotationSpeed: 0.3, // slower rotation
+        patternIntensity: 0.9
       };
     case 'pattern2': // Syncopated
       return {
@@ -83,12 +98,12 @@ export const mapPatternToVisualParameters = (
         rotationSpeed: 0.8,
         patternIntensity: 0.85
       };
-    case 'pattern3': // Deep Hypnotic
+    case 'pattern1': // Classic Minimal
       return {
-        visualTempo: 0.7, // slower for the hypnotic feel
-        colorIntensity: 0.8 + (bassEnergy * 0.2),
-        rotationSpeed: 0.3, // slower rotation
-        patternIntensity: 0.9
+        visualTempo: 1,
+        colorIntensity: 0.5 + (bassEnergy * 0.5),
+        rotationSpeed: 0.5,
+        patternIntensity: 0.7
       };
     default:
       return {
