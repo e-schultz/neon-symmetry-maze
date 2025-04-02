@@ -1,41 +1,28 @@
 
-import React, { useState } from 'react';
-import { useToast } from '@/components/ui/use-toast';
+import React from 'react';
 import TonePlayer from './TonePlayer';
 import PlayPauseButton from './audio/PlayPauseButton';
 import VolumeControl from './audio/VolumeControl';
 import TrackInfo from './audio/TrackInfo';
+import { useAudio } from '@/contexts/AudioContext';
 
 interface AudioPlayerProps {
   onBeat: () => void;
 }
 
 const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
-  const [isMuted, setIsMuted] = useState(false);
-  const { toast } = useToast();
+  const { 
+    isPlaying, 
+    togglePlayback, 
+    volume, 
+    setVolume, 
+    isMuted, 
+    toggleMute,
+    bpm,
+    genre
+  } = useAudio();
 
-  const togglePlayPause = () => {
-    if (!isPlaying) {
-      toast({
-        title: "Sound Activated",
-        description: "The minimal techno soundtrack (124 BPM) is now playing.",
-        duration: 3000,
-      });
-    }
-    
-    setIsPlaying(!isPlaying);
-  };
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-  };
-
-  const handleVolumeChange = (value: number[]) => {
-    setVolume(value[0]);
-  };
-
+  // Calculate effective volume (considering mute state)
   const effectiveVolume = isMuted ? 0 : volume;
 
   return (
@@ -49,17 +36,17 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ onBeat }) => {
       <div className="container flex items-center justify-between gap-4">
         <PlayPauseButton
           isPlaying={isPlaying}
-          onTogglePlayPause={togglePlayPause}
+          onTogglePlayPause={togglePlayback}
         />
         
         <VolumeControl
           volume={volume}
           isMuted={isMuted}
-          onVolumeChange={handleVolumeChange}
+          onVolumeChange={setVolume}
           onToggleMute={toggleMute}
         />
         
-        <TrackInfo bpm={124} genre="Minimal Techno" />
+        <TrackInfo bpm={bpm} genre={genre} />
       </div>
     </div>
   );

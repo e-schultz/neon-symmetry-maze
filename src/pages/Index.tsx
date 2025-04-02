@@ -4,9 +4,11 @@ import AudioPlayer from '@/components/AudioPlayer';
 import GeometricVisualization from '@/components/GeometricVisualization';
 import { useToast } from '@/components/ui/use-toast';
 import { InfoIcon } from 'lucide-react';
+import { useAudio } from '@/contexts/AudioContext';
 
 const Index = () => {
   const { toast } = useToast();
+  const { bpm, genre } = useAudio();
   const [beatActive, setBeatActive] = useState(false);
   
   const handleBeat = () => {
@@ -43,7 +45,7 @@ const Index = () => {
           Geometric Symmetry
         </h1>
         <p className="text-neon-white/70 max-w-md mx-auto">
-          A meditative visual experience with synchronized minimal techno at 124 BPM
+          A meditative visual experience with synchronized minimal techno at {bpm} BPM
         </p>
       </header>
       
@@ -54,13 +56,13 @@ const Index = () => {
         
         <div className="max-w-md text-center text-sm text-neon-white/50 mt-8">
           <p>
-            This visualization features rotating geometric patterns with 4-way symmetry, synchronized to a minimal techno soundtrack.
+            This visualization features rotating geometric patterns with 4-way symmetry, synchronized to a {genre.toLowerCase()} soundtrack.
           </p>
           
           <div className="flex items-center justify-center mt-4 p-2 rounded-md bg-gray-900/50 border border-neon-cyan/20 text-xs">
             <InfoIcon size={16} className="mr-2 text-neon-cyan" />
             <p>
-              Using Tone.js to generate live minimal techno at 124 BPM.
+              Using Tone.js to generate live {genre.toLowerCase()} at {bpm} BPM.
             </p>
           </div>
         </div>
