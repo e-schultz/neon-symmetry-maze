@@ -51,7 +51,7 @@ const Index = () => {
       
       <main className="container flex-1 flex flex-col items-center justify-center">
         <div onClick={handleStartExperience} className="mb-8 cursor-pointer">
-          <GeometricVisualization beatActive={beatActive} />
+          <GeometricVisualization />
         </div>
         
         <div className="max-w-md text-center text-sm text-neon-white/50 mt-8">
