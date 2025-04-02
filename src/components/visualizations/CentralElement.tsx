@@ -1,31 +1,39 @@
 
 import React from 'react';
 import { CentralElementProps } from './types';
-import { useAudio } from '@/contexts/AudioContext';
+import { useAnimationStyles } from '@/utils/animationUtils';
 
 const CentralElement: React.FC<CentralElementProps> = ({ 
   centerPoint, 
   size,
   isMobile 
 }) => {
-  const { audioParameters } = useAudio();
-  const { patternIntensity, bassEnergy } = audioParameters;
-  
   const halfSize = size / 2;
   
-  // Dynamic sizing and opacity based on bass energy
-  const pulseScale = 1 + (bassEnergy * 0.2);
-  const opacity = 0.7 + (patternIntensity * 0.3);
+  // Use the animation utility to generate styles
+  const centralElementStyles = useAnimationStyles({
+    baseScale: 1,
+    pulseScale: 0.2,
+    baseOpacity: 0.7,
+    pulseOpacity: 0.3
+  });
+  
+  // Animation for the inner patterns
+  const patternStyles = useAnimationStyles({
+    rotate: true,
+    rotationSpeed: 0.5,
+    rotationDirection: 'clockwise',
+    baseOpacity: 0.8,
+    pulseOpacity: 0.2
+  });
   
   return (
     <>
       <g 
-        className={`animate-rotate-slow`} 
+        className="animate-rotate-slow"
         style={{ 
           transformOrigin: `${halfSize}px ${halfSize}px`,
-          opacity: opacity,
-          transform: `scale(${pulseScale})`,
-          transition: 'all 0.2s ease-out'
+          ...patternStyles
         }}
       >
         <polygon
@@ -54,12 +62,9 @@ const CentralElement: React.FC<CentralElementProps> = ({
       <circle
         cx={centerPoint.x}
         cy={centerPoint.y}
-        r={8 + (bassEnergy * 4)}
-        className="fill-neon-magenta transition-all duration-300"
-        style={{
-          opacity: opacity,
-          transition: 'all 0.2s ease-out'
-        }}
+        r={8}
+        className="fill-neon-magenta"
+        style={centralElementStyles}
       />
     </>
   );
