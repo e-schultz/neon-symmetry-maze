@@ -12,11 +12,14 @@ import { useAudio } from '@/contexts/AudioContext';
 const PatternSelector = () => {
   const { selectedPattern, setSelectedPattern } = useAudio();
   
+  // Ensure we have a valid pattern selected
+  const currentPattern = selectedPattern || 'pattern1';
+  
   return (
     <div className="flex items-center gap-2">
       <span className="text-xs text-white/60">Pattern:</span>
       <Select 
-        value={selectedPattern} 
+        value={currentPattern} 
         onValueChange={setSelectedPattern}
       >
         <SelectTrigger className="h-8 w-32 bg-black/50 border-none text-xs">

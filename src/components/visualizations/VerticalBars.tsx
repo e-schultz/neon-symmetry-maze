@@ -23,7 +23,7 @@ const VerticalBars: React.FC<VerticalBarsProps> = ({ count, size }) => {
     });
     
     return () => cancelAnimationFrame(animationFrame);
-  });
+  }, []);
   
   const generateVerticalBars = () => {
     const bars = [];
