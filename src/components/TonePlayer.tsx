@@ -64,9 +64,9 @@ const TonePlayer: React.FC<TonePlayerProps> = ({ isPlaying, volume, onBeat }) =>
       }
     }).connect(pingPongDelay);
     
-    // Set up hi-hat
+    // Set up hi-hat - Updated to use correct MetalSynth properties
     hihatSynth.current = new Tone.MetalSynth({
-      frequency: 200,
+      // Remove 'frequency' property as it's not in the MetalSynthOptions type
       envelope: {
         attack: 0.001,
         decay: 0.1,
