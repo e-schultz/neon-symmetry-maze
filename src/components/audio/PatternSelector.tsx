@@ -22,10 +22,10 @@ const PatternSelector = () => {
         <SelectTrigger className="h-8 w-32 bg-black/50 border-none text-xs">
           <SelectValue placeholder="Pattern" />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="pattern1">Classic Minimal</SelectItem>
-          <SelectItem value="pattern2">Syncopated</SelectItem>
-          <SelectItem value="pattern3">Deep Hypnotic</SelectItem>
+        <SelectContent className="bg-black/90 border-gray-800">
+          <SelectItem value="pattern1" className="text-white/90 hover:bg-white/10">Classic Minimal</SelectItem>
+          <SelectItem value="pattern2" className="text-white/90 hover:bg-white/10">Syncopated</SelectItem>
+          <SelectItem value="pattern3" className="text-white/90 hover:bg-white/10">Deep Hypnotic</SelectItem>
         </SelectContent>
       </Select>
     </div>
