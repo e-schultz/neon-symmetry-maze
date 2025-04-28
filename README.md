@@ -1,73 +1,117 @@
-# Welcome to your Lovable project
 
-## Project info
+# Neon Symmetry Maze - Interactive Audio Visualization
 
-**URL**: https://lovable.dev/projects/50558988-5a3b-4aa0-9c66-b65d197f2e7a
+An interactive audio visualization web application that creates mesmerizing geometric patterns synchronized with audio patterns. Experience dynamic visual elements that respond to rhythm and sound.
 
-## How can I edit this code?
+![Project Screenshot](https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&h=630)
 
-There are several ways of editing your application.
+## 🎵 Demo
 
-**Use Lovable**
+Check out the live demo: [Neon Symmetry Maze](https://lovable.dev/projects/50558988-5a3b-4aa0-9c66-b65d197f2e7a)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/50558988-5a3b-4aa0-9c66-b65d197f2e7a) and start prompting.
+## ✨ Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- Interactive geometric visualizations
+- Multiple audio pattern selection
+- Real-time audio visualization
+- Responsive design for all devices
+- Customizable audio controls
 
-**Use your preferred IDE**
+## 🛠️ Technologies Used
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- React + TypeScript
+- Vite for fast development
+- Tone.js for audio processing
+- Tailwind CSS for styling
+- shadcn/ui components
+- SVG for geometric patterns
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🚀 Getting Started
 
-Follow these steps:
+### Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+- Node.js & npm - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+### Local Development
+
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Navigate to project directory
+cd neon-symmetry-maze
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 📝 Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- `/src/components/audio` - Audio control components
+- `/src/components/visualizations` - Visualization components
+- `/src/contexts` - React context providers
+- `/src/utils` - Utility functions and services
+- `/src/hooks` - Custom React hooks
 
-**Use GitHub Codespaces**
+## 🔧 Editing the Project
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+There are several ways to edit this project:
 
-## What technologies are used for this project?
+### 1. Using Lovable (Recommended)
 
-This project is built with .
+Visit the [Lovable Project](https://lovable.dev/projects/50558988-5a3b-4aa0-9c66-b65d197f2e7a) and start prompting. Changes made via Lovable will be automatically committed to the repository.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### 2. Using Your Preferred IDE
 
-## How can I deploy this project?
+Clone the repository and work locally:
 
-Simply open [Lovable](https://lovable.dev/projects/50558988-5a3b-4aa0-9c66-b65d197f2e7a) and click on Share -> Publish.
+```bash
+git clone <YOUR_GIT_URL>
+cd neon-symmetry-maze
+npm install
+npm run dev
+```
 
-## Can I connect a custom domain to my Lovable project?
+### 3. Direct GitHub Editing
 
-Yes it is!
+- Navigate to desired files
+- Click the "Edit" button (pencil icon)
+- Make changes and commit
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### 4. GitHub Codespaces
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Click "Code" button on repository
+- Select "Codespaces" tab
+- Click "New codespace"
+
+## 🌐 Deployment
+
+Deploy your project easily through Lovable:
+1. Open [Lovable](https://lovable.dev/projects/50558988-5a3b-4aa0-9c66-b65d197f2e7a)
+2. Click Share -> Publish
+
+## 🔗 Custom Domain Setup
+
+Connect your own domain by following these steps:
+1. Navigate to Project > Settings > Domains
+2. Click "Connect Domain"
+3. Follow the DNS configuration instructions
+
+For detailed instructions, visit [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## 📫 Contributing
+
+Feel free to open issues and pull requests. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 🙏 Acknowledgments
+
+- Built with [Lovable](https://lovable.dev)
+- Audio processing powered by [Tone.js](https://tonejs.github.io)
+- UI components from [shadcn/ui](https://ui.shadcn.com)
