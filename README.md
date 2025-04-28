@@ -3,7 +3,8 @@
 
 An interactive audio visualization web application that creates mesmerizing geometric patterns synchronized with audio patterns. Experience dynamic visual elements that respond to rhythm and sound.
 
-![Project Screenshot](https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=1200&h=630)
+<img width="1432" alt="Screenshot 2025-04-28 at 8 27 16 AM" src="https://github.com/user-attachments/assets/283b4bef-e145-4f84-a30d-ebe4044580b0" />
+
 
 ## 🎵 Demo
 
